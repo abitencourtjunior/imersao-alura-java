@@ -4,12 +4,13 @@ import br.com.imersaoalura.stickers.model.Sticker;
 import br.com.imersaoalura.stickers.services.DownloadStickerServices;
 import br.com.imersaoalura.stickers.services.StickService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@RestController(value = "sticker")
+@RestController
 @RequiredArgsConstructor
 public class StickerController {
 
@@ -17,11 +18,13 @@ public class StickerController {
 	private final DownloadStickerServices downloadStickerServices;
 
 	@PostMapping
+	@PreAuthorize("hasAnyAuthority('ROLE_APP_ADMIN')")
 	public Sticker createSticker(@RequestBody Sticker sticker){
 		return stickService.create(sticker);
 	}
 
 	@GetMapping
+	@PreAuthorize("hasAnyAuthority('ROLE_APP_ADMIN')")
 	public List<Sticker> findAllSticker(){
 		return stickService.findAll();
 	}
