@@ -12,10 +12,11 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-public class StickerController {
+public class StickerController extends BaseController {
 
 	private final StickService stickService;
 	private final DownloadStickerServices downloadStickerServices;
+
 
 	@PostMapping
 	@PreAuthorize("hasAnyAuthority('ROLE_APP_ADMIN')")
@@ -24,7 +25,6 @@ public class StickerController {
 	}
 
 	@GetMapping
-	@PreAuthorize("hasAnyAuthority('ROLE_APP_ADMIN')")
 	public List<Sticker> findAllSticker(){
 		return stickService.findAll();
 	}
@@ -34,4 +34,5 @@ public class StickerController {
 		downloadStickerServices.createSticker(id);
 		System.out.println("Download executado com sucesso!" + id);
 	}
+
 }
